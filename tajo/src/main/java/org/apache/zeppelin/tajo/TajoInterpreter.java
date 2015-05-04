@@ -12,13 +12,16 @@ import java.util.Properties;
 import org.apache.tajo.conf.TajoConf;
 import org.apache.tajo.thrift.ThriftServerConstants;
 import org.apache.tajo.thrift.client.TajoThriftClient;
+import org.apache.tajo.thrift.generated.TBriefQueryInfo;
 import org.apache.tajo.thrift.generated.TColumn;
+import org.apache.tajo.thrift.generated.TGetQueryStatusResponse;
 import org.apache.tajo.thrift.generated.TSchema;
 import org.apache.tajo.thrift.generated.TTableDesc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.protobuf.ServiceException;
+
 import org.apache.zeppelin.interpreter.Interpreter;
 import org.apache.zeppelin.interpreter.InterpreterContext;
 import org.apache.zeppelin.interpreter.InterpreterException;
@@ -58,7 +61,9 @@ public class TajoInterpreter extends Interpreter {
   public void open() {
     TajoConf conf = new TajoConf();
     try {
+      logger.info("Creating new TajoThriftClient");
       tajoClient = new TajoThriftClient(conf, getProperty("tajo.thrift.server"), null);
+      logger.info("Done, TajoThriftClient created");
     } catch (IOException e) {
       throw new InterpreterException(e);
     }
@@ -66,7 +71,9 @@ public class TajoInterpreter extends Interpreter {
 
   @Override
   public void close() {
+    logger.info("Clonsing tajoClient");
     tajoClient.close();
+    logger.info("Done. tajoClient closed");
   }
 
   private int getMaxResult() {
@@ -215,7 +222,9 @@ public class TajoInterpreter extends Interpreter {
     }
 
     try {
+      logger.info("Executing query: " + st);
       result = tajoClient.executeQueryAndGetResult(st);
+      logger.info("Done. Query executed.");
       // empty result
       if (result == null) {
         return new InterpreterResult(Code.SUCCESS, "");
@@ -279,6 +288,8 @@ public class TajoInterpreter extends Interpreter {
 
   @Override
   public void cancel(InterpreterContext context) {
+    //TODO(alex) 
+    //tajoClient.killQuery(final String queryId)
   }
 
   @Override
@@ -288,7 +299,25 @@ public class TajoInterpreter extends Interpreter {
 
   @Override
   public int getProgress(InterpreterContext context) {
-    return 0;
+    int result = 0;
+    logger.info("Getting progress information...");
+    try {
+      List<TBriefQueryInfo> queryList = tajoClient.getQueryList();
+
+      logger.info("\t " + queryList.size() + " queries");
+      if (queryList.isEmpty()) {
+        return result;
+      }
+
+      String queryId = queryList.get(queryList.size() - 1).queryId;
+      TGetQueryStatusResponse query = tajoClient.getQueryStatus(queryId);
+      logger.info("Done! " + query);
+      result = (int) query.progress * 100;
+
+    } catch (Exception e) {
+      logger.error("getProgress failed ", e);
+    }
+    return result;
   }
 
   @Override
