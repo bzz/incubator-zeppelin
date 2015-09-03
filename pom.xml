@@ -84,7 +84,7 @@
   <inceptionYear>2013</inceptionYear>
 
   <modules>
-    <module>zeppelin-interpreter</module>
+<!--    <module>zeppelin-interpreter</module>
     <module>zeppelin-zengine</module>
     <module>spark</module>
     <module>markdown</module>
@@ -94,8 +94,8 @@
     <module>tajo</module>
     <module>flink</module>
     <module>zeppelin-web</module>
+    <module>zeppelin-distribution</module> -->
     <module>zeppelin-server</module>
-    <module>zeppelin-distribution</module>
   </modules>
 
   <properties>
