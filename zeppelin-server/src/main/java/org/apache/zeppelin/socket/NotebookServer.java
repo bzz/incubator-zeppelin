@@ -471,14 +471,14 @@ public class NotebookServer extends WebSocketServlet implements
     addConnectionToNote(JOB_MANAGER_SERVICE.JOB_MANAGER_PAGE.getKey(), conn);
     AuthenticationInfo subject = new AuthenticationInfo(fromMessage.principal);
     List<Map<String, Object>> noteJobs = notebook()
-      .getJobListByUnixTime(false, 0, subject);
+        .getJobListByUnixTime(false, 0, subject);
     Map<String, Object> response = new HashMap<>();
 
     response.put("lastResponseUnixTime", System.currentTimeMillis());
     response.put("jobs", noteJobs);
 
     conn.send(serializeMessage(new Message(OP.LIST_NOTE_JOBS)
-      .put("noteJobs", response)));
+        .put("noteJobs", response)));
   }
 
   public void broadcastUpdateNoteJobInfo(long lastUpdateUnixTime) throws IOException {
@@ -495,7 +495,7 @@ public class NotebookServer extends WebSocketServlet implements
     response.put("jobs", noteJobs != null ? noteJobs : new LinkedList<>());
 
     broadcast(JOB_MANAGER_SERVICE.JOB_MANAGER_PAGE.getKey(),
-      new Message(OP.LIST_UPDATE_NOTE_JOBS).put("noteRunningJobs", response));
+        new Message(OP.LIST_UPDATE_NOTE_JOBS).put("noteRunningJobs", response));
   }
 
   public void unsubscribeNoteJobInfo(NotebookSocket conn) {
@@ -1175,8 +1175,8 @@ public class NotebookServer extends WebSocketServlet implements
   }
 
   private void pushAngularObjectToRemoteRegistry(String noteId, String paragraphId,
-     String varName, Object varValue, RemoteAngularObjectRegistry remoteRegistry,
-     String interpreterGroupId, NotebookSocket conn) {
+       String varName, Object varValue, RemoteAngularObjectRegistry remoteRegistry,
+       String interpreterGroupId, NotebookSocket conn) {
 
     final AngularObject ao = remoteRegistry.addAndNotifyRemoteProcess(varName, varValue,
             noteId, paragraphId);
@@ -1191,8 +1191,8 @@ public class NotebookServer extends WebSocketServlet implements
   }
 
   private void removeAngularFromRemoteRegistry(String noteId, String paragraphId,
-    String varName, RemoteAngularObjectRegistry remoteRegistry,
-    String interpreterGroupId, NotebookSocket conn) {
+      String varName, RemoteAngularObjectRegistry remoteRegistry,
+      String interpreterGroupId, NotebookSocket conn) {
     final AngularObject ao = remoteRegistry.removeAndNotifyRemoteProcess(varName, noteId,
             paragraphId);
     this.broadcastExcept(
@@ -1204,9 +1204,9 @@ public class NotebookServer extends WebSocketServlet implements
             conn);
   }
 
-  private void pushAngularObjectToLocalRepo(String noteId, String paragraphId, String varName,
-    Object varValue, AngularObjectRegistry registry,
-    String interpreterGroupId, NotebookSocket conn) {
+  private void pushAngularObjectToLocalRepo(String noteId, String paragraphId,
+        String varName, Object varValue, AngularObjectRegistry registry,
+        String interpreterGroupId, NotebookSocket conn) {
     AngularObject angularObject = registry.get(varName, noteId, paragraphId);
     if (angularObject == null) {
       angularObject = registry.add(varName, varValue, noteId, paragraphId);
@@ -1224,7 +1224,7 @@ public class NotebookServer extends WebSocketServlet implements
   }
 
   private void removeAngularObjectFromLocalRepo(String noteId, String paragraphId, String varName,
-    AngularObjectRegistry registry, String interpreterGroupId, NotebookSocket conn) {
+      AngularObjectRegistry registry, String interpreterGroupId, NotebookSocket conn) {
     final AngularObject removed = registry.remove(varName, noteId, paragraphId);
     if (removed != null) {
       this.broadcastExcept(
@@ -1326,11 +1326,9 @@ public class NotebookServer extends WebSocketServlet implements
         new AuthenticationInfo(fromMessage.principal, fromMessage.ticket);
     p.setAuthenticationInfo(authenticationInfo);
 
-    Map<String, Object> params = (Map<String, Object>) fromMessage
-       .get("params");
+    Map<String, Object> params = (Map<String, Object>) fromMessage.get("params");
     p.settings.setParams(params);
-    Map<String, Object> config = (Map<String, Object>) fromMessage
-       .get("config");
+    Map<String, Object> config = (Map<String, Object>) fromMessage.get("config");
     p.setConfig(config);
     // if it's the last paragraph, let's add a new one
     boolean isTheLastParagraph = note.isLastParagraph(p.getId());
@@ -1396,7 +1394,7 @@ public class NotebookServer extends WebSocketServlet implements
     if (revision != null) {
       List<Revision> revisions = notebook.listRevisionHistory(noteId, subject);
       conn.send(serializeMessage(new Message(OP.LIST_REVISION_HISTORY)
-        .put("revisionList", revisions)));
+          .put("revisionList", revisions)));
     }
   }
 
@@ -1407,7 +1405,7 @@ public class NotebookServer extends WebSocketServlet implements
     List<Revision> revisions = notebook.listRevisionHistory(noteId, subject);
 
     conn.send(serializeMessage(new Message(OP.LIST_REVISION_HISTORY)
-      .put("revisionList", revisions)));
+        .put("revisionList", revisions)));
   }
 
   private void getNoteByRevision(NotebookSocket conn, Notebook notebook, Message fromMessage)
