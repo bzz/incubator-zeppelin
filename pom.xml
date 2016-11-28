@@ -400,6 +400,8 @@
           <configuration>
             <configLocation>_tools/checkstyle.xml</configLocation>
             <enableRSS>false</enableRSS>
+            <consoleOutput>true</consoleOutput>
+            <!-- TODO: <violationSeverity>warning</violationSeverity> -->
           </configuration>
           <executions>
             <execution>
