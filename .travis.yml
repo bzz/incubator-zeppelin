@@ -40,7 +40,7 @@ matrix:
   include:
     # Test checkstyle
     - jdk: "oraclejdk7"
-      env: SCALA_VER="2.11" PROFILE="" BUILD_FLAG="package -Pbuild-distr -DskipTests -DskipRat" TEST_FLAG="-U org.apache.maven.plugins:maven-checkstyle-plugin:check -Pusing-packaged-distr -DskipTests -DskipRat" TEST_PROJECTS=""
+      env: SCALA_VER="2.11" PROFILE="-Pscala-2.11" BUILD_FLAG="package -Pbuild-distr -DskipTests -DskipRat" TEST_FLAG="-U org.apache.maven.plugins:maven-checkstyle-plugin:check -Pusing-packaged-distr -DskipTests -DskipRat" TEST_PROJECTS=""
 
     # Test License compliance using RAT tool
     - jdk: "oraclejdk7"
