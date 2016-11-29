@@ -401,7 +401,7 @@
             <configLocation>_tools/checkstyle.xml</configLocation>
             <enableRSS>false</enableRSS>
             <consoleOutput>true</consoleOutput>
-            <!--<violationSeverity>warn</violationSeverity>-->
+            <!--<violationSeverity>error</violationSeverity>-->
           </configuration>
           <executions>
             <execution>
