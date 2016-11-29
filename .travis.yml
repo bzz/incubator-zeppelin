@@ -40,7 +40,7 @@ matrix:
   include:
     # Test checkstyle
     - jdk: "oraclejdk7"
-      env: SCALA_VER="2.11" SPARK_VER="1.4.1" HADOOP_VER="2.3" PROFILE="-Pspark-1.4 -Pr -Phadoop-2.3 -Ppyspark -Psparkr -pPscala-2.11" BUILD_FLAG="package -DskipTests -DskipRat -Dcheckstyle.skip=true" TEST_FLAG="verify -DskipRat" TEST_PROJECTS="-pl zeppelin-interpreter,zeppelin-zengine,zeppelin-server,zeppelin-display,spark-dependencies,spark,r -Dtest=org.apache.zeppelin.rest.*Test,org.apache.zeppelin.spark.* -DfailIfNoTests=false"
+      env: SCALA_VER="2.11" SPARK_VER="1.6.1" HADOOP_VER="2.3" PROFILE="-Pspark-1.6 -Pr -Phadoop-2.3 -Ppyspark -Psparkr -pPscala-2.11" BUILD_FLAG="package -DskipTests -DskipRat -Dcheckstyle.skip=true" TEST_FLAG="verify -DskipRat" TEST_PROJECTS="-pl zeppelin-interpreter,zeppelin-zengine,zeppelin-server,zeppelin-display,spark-dependencies,spark,r -Dtest=org.apache.zeppelin.rest.*Test,org.apache.zeppelin.spark.* -DfailIfNoTests=false"
 
     # Test License compliance using RAT tool
     - jdk: "oraclejdk7"
@@ -72,6 +72,7 @@ matrix:
 
 before_install:
   - echo "MAVEN_OPTS='-Xms1024M -Xmx2048M -XX:MaxPermSize=1024m -XX:-UseGCOverheadLimit'" >> ~/.mavenrc
+  - ls -la .spark-dist ${HOME}/.m2/repository/.cache/maven-download-plugin || true
   - ls .node_modules && cp -r .node_modules zeppelin-web/node_modules || echo "node_modules are not cached"
   - mkdir -p ~/R
   - echo 'R_LIBS=~/R' > ~/.Renviron
