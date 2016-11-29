@@ -390,18 +390,18 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>2.17</version>
-          <!--<dependencies>-->
-            <!--<dependency>-->
-              <!--<groupId>com.puppycrawl.tools</groupId>-->
-              <!--<artifactId>checkstyle</artifactId>-->
-              <!--<version>6.19</version>-->
-            <!--</dependency>-->
-          <!--</dependencies>-->
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>6.19</version>
+            </dependency>
+          </dependencies>
           <configuration>
             <configLocation>_tools/checkstyle.xml</configLocation>
             <enableRSS>false</enableRSS>
-            <!--<consoleOutput>true</consoleOutput>-->
-            <!--<violationSeverity>error</violationSeverity>-->
+            <consoleOutput>true</consoleOutput>
+            <!--<violationSeverity>warn</violationSeverity>-->
           </configuration>
           <executions>
             <execution>
