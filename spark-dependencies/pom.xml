@@ -832,6 +832,7 @@
                   <goal>wget</goal>
                 </goals>
                 <configuration>
+                  <retries>5</retries>
                   <url>${spark.download.url}</url>
                   <outputDirectory>${spark.dist.cache}</outputDirectory>
                 </configuration>
