@@ -400,7 +400,7 @@
           <configuration>
             <configLocation>_tools/checkstyle.xml</configLocation>
             <enableRSS>false</enableRSS>
-            <consoleOutput>true</consoleOutput>
+            <!--<consoleOutput>true</consoleOutput>-->
             <!--<violationSeverity>error</violationSeverity>-->
           </configuration>
           <executions>
